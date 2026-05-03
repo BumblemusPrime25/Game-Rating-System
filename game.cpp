@@ -1,5 +1,7 @@
 #include "./game.h"
 #include <iostream>
+#include <fstream>
+#include <vector>
 
 void printMenu() {
     std::cout << "-------------------------\n";
@@ -18,7 +20,50 @@ void printMenu() {
 }
 
 void addGame(std::vector<Game>& games, int& nextId) {
-    
+    Game game;
+
+    std::string name;
+    std::string description;
+    int grade;
+    int id;
+
+    std::cout << "ENTER GAME NAME: ";
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    std::getline(std::cin, name);
+
+    std::cout << "ENTER GAME DESCRIPTION: ";
+    std::getline(std::cin, description);
+
+    while (true) {
+        std::cout << "ENTER RATING (0-100): ";
+        std::cin >> grade;
+
+        if (std::cin.fail()) {
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            std::cout << "INVALID INPUT. PLEASE ENTER A NUMBER.\n";
+            continue;
+        }
+
+        if (grade < 0 || grade > 100) {
+            std::cout << "INVALID RATING. MUST BE 0-100.\n";
+        } else {
+            break;
+        }
+    }
+
+    id = nextId;
+    nextId++;
+
+    game.title = name;
+    game.description = description;
+    game.rating = grade;
+    game.id = id;
+
+    games.push_back(game);
+    std::cout << "GAME ADDED SUCCESSFULLY!\n";
+
+    saveToFile(game);
 }
 
 void deleteGame(std::vector<Game>& games, int& nextId) {}
@@ -29,6 +74,18 @@ void searchGames(std::vector<Game>& games) {}
 
 void sortGames(std::vector<Game>& games) {}
 
-void saveToFile(const Game& game) {}
+void saveToFile(const Game& game) {
+    std::ofstream gamesFile("ratings.txt", std::ios::app);
+
+    if (!gamesFile.is_open()) {
+        std::cerr << "Error: Could not open the file." << std::endl;
+        return;
+    }
+
+    gamesFile << game.id << ","
+              << game.title << ","
+              << game.rating << ","
+              << game.description << "\n";
+}
 
 void loadFromFile(std::vector<Game>& games, int& nextId) {}
