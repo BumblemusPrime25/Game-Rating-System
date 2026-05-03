@@ -11,12 +11,11 @@ void printMenu() {
     std::cout << "-------------------------\n\n";
 
     std::cout << "1. Add Game\n";
-    std::cout << "2. Delete Game\n";
-    std::cout << "3. View Games\n";
-    std::cout << "4. Search Games\n";
-    std::cout << "5. Sort Games\n";
-    std::cout << "6. Load from File\n";
-    std::cout << "7. Exit\n";
+    std::cout << "2. View Games\n";
+    std::cout << "3. Search Games\n";
+    std::cout << "4. Sort Games\n";
+    std::cout << "5. Load from File\n";
+    std::cout << "6. Exit\n";
 
     std::cout << "Enter your choice: ";
 }
