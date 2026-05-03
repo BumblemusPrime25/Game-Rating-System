@@ -66,9 +66,15 @@ void addGame(std::vector<Game>& games, int& nextId) {
     saveToFile(game);
 }
 
-void deleteGame(std::vector<Game>& games, int& nextId) {}
-
-void viewGames(std::vector<Game>& games) {}
+void viewGames(std::vector<Game>& games) {
+    for (size_t i = 0; i < games.size(); ++i) {
+        std::cout << "ID: " << games[i].id
+                  << ", Title: " << games[i].title
+                  << ", Rating: " << games[i].rating
+                  << ", Description: " << games[i].description
+                  << std::endl;
+    }
+}
 
 void searchGames(std::vector<Game>& games) {}
 
