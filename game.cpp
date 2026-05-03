@@ -1,6 +1,7 @@
 #include "./game.h"
 #include <iostream>
 #include <fstream>
+#include <sstream>
 #include <vector>
 
 void printMenu() {
@@ -40,7 +41,6 @@ void addGame(std::vector<Game>& games, int& nextId) {
 
         if (std::cin.fail()) {
             std::cin.clear();
-            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             std::cout << "INVALID INPUT. PLEASE ENTER A NUMBER.\n";
             continue;
         }
@@ -88,4 +88,46 @@ void saveToFile(const Game& game) {
               << game.description << "\n";
 }
 
-void loadFromFile(std::vector<Game>& games, int& nextId) {}
+void loadFromFile(std::vector<Game>& games, int& nextId) {
+    std::ifstream file("ratings.txt");
+
+    if (!file.is_open()) {
+        std::cerr << "Error: Could not open ratings.txt for reading.\n";
+        return;
+    }
+
+    games.clear();
+    nextId = 1;
+
+    std::string line;
+
+    while (std::getline(file, line)) {
+        if (line.empty()) continue;
+
+        std::stringstream ss(line);
+        std::string idStr, nameStr, gradeStr, descStr;
+
+        std::getline(ss, idStr, ',');
+        std::getline(ss, nameStr, ',');
+        std::getline(ss, gradeStr, ',');
+        std::getline(ss, descStr, ',');
+
+        int id = std::stoi(idStr);
+        int grade = std::stoi(gradeStr);
+
+        Game game;
+        game.id = id;
+        game.title = nameStr;
+        game.rating = grade;
+        game.description = descStr;
+
+        games.push_back(game);
+
+        if (id >= nextId) {
+            nextId = id + 1;
+        }
+    }
+
+    file.close();
+    std::cout << "Games loaded successfully!\n";
+}
