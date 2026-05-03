@@ -76,7 +76,79 @@ void viewGames(std::vector<Game>& games) {
     }
 }
 
-void searchGames(std::vector<Game>& games) {}
+void searchGames(std::vector<Game>& games) {
+    std::string search;
+
+    std::cout << "Enter game you want to search: ";
+    std::cin >> search;
+
+    std::ifstream file("games.txt");
+    std::string line;
+
+    int lineNumber = 0;
+
+    if (!file.is_open()) {
+        std::cerr << "Unable to open file" << std::endl;
+        return;
+    }
+
+    while (std::getline(file, line)) {
+        lineNumber++;
+
+        if (line.find(search) != std::string::npos) {
+
+            std::stringstream ss(line);
+            std::string idStr, nameStr, gradeStr, descStr;
+
+            std::getline(ss, idStr, ',');
+            std::getline(ss, nameStr, ',');
+            std::getline(ss, gradeStr, ',');
+            std::getline(ss, descStr, ',');
+
+            std::cout << "Found game on line " << lineNumber << ":\n";
+            std::cout << "  ID: " << idStr << "\n";
+            std::cout << "  Name: " << nameStr << "\n";
+            std::cout << "  Rating: " << gradeStr << "\n";
+            std::cout << "  Description: " << descStr << "\n\n";
+        }
+    }
+
+    std::string search;
+
+    std::cout << "Enter game you want to search: ";
+    std::cin >> search;
+
+    std::ifstream file("ratings.txt");
+    std::string line;
+
+    int lineNumber = 0;
+
+    if (!file.is_open()) {
+        std::cerr << "Unable to open file" << std::endl;
+        return;
+    }
+
+    while (std::getline(file, line)) {
+        lineNumber++;
+
+        if (line.find(search) != std::string::npos) {
+
+            std::stringstream ss(line);
+            std::string idStr, nameStr, gradeStr, descStr;
+
+            std::getline(ss, idStr, ',');
+            std::getline(ss, nameStr, ',');
+            std::getline(ss, gradeStr, ',');
+            std::getline(ss, descStr, ',');
+
+            std::cout << "Found game on line " << lineNumber << ":\n";
+            std::cout << "  ID: " << idStr << "\n";
+            std::cout << "  Name: " << nameStr << "\n";
+            std::cout << "  Rating: " << gradeStr << "\n";
+            std::cout << "  Description: " << descStr << "\n\n";
+        }        
+    }
+}
 
 void sortGames(std::vector<Game>& games) {}
 
