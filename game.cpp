@@ -3,6 +3,7 @@
 #include <fstream>
 #include <sstream>
 #include <vector>
+#include <algorithm>
 
 void printMenu() {
     std::cout << "-------------------------\n";
@@ -150,7 +151,51 @@ void searchGames(std::vector<Game>& games) {
     }
 }
 
-void sortGames(std::vector<Game>& games) {}
+void sortGames(std::vector<Game>& games) {
+    int choice;
+
+    std::cout << "\nSort by:\n";
+    std::cout << "1. ID\n";
+    std::cout << "2. Name\n";
+    std::cout << "3. Rating\n";
+    std::cout << "Enter choice: ";
+    std::cin >> choice;
+
+    switch (choice) {
+        case 1:
+            std::sort(games.begin(), games.end(),
+                [](const Game& a, const Game& b) {
+                    return a.id < b.id;
+                }
+            );
+            std::cout << "Sorted by ID.\n";
+            break;
+
+        case 2:
+            std::sort(games.begin(), games.end(),
+                [](const Game& a, const Game& b) {
+                    return a.title < b.title;
+                }
+            );
+            std::cout << "Sorted by Name.\n";
+            break;
+
+        case 3:
+            std::sort(games.begin(), games.end(),
+                [](const Game& a, const Game& b) {
+                    return a.rating > b.rating;
+                }
+            );
+            std::cout << "Sorted by Rating.\n";
+            break;
+
+        default:
+            std::cout << "Invalid choice.\n";
+            return;
+    }
+
+    std::cout << "Games sorted successfully!\n";
+}
 
 void saveToFile(const Game& game) {
     std::ofstream gamesFile("ratings.txt", std::ios::app);
