@@ -14,6 +14,8 @@ void printMenu();
 
 void addGame(std::vector<Game>& games, int& nextId);
 
+void deleteGame(std::vector<Game>& games, int& nextId);
+
 void viewGames(std::vector<Game>& games);
 
 void searchGames(std::vector<Game>& games);
